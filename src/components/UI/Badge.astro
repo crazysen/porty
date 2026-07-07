@@ -1,0 +1,28 @@
+---
+interface Props {
+  variant?: 'default' | 'mobile' | 'web' | 'fullstack';
+  class?: string;
+}
+
+const { variant = 'default', class: className = '' } = Astro.props;
+
+const variants = {
+  default: 'bg-accent-blue/20 text-accent-cyan border-accent-blue/30',
+  mobile: 'bg-accent-purple/20 text-accent-violet border-accent-purple/30',
+  web: 'bg-accent-blue/20 text-accent-cyan border-accent-blue/30',
+  fullstack: 'bg-accent-cyan/10 text-accent-cyan border-accent-cyan/30',
+};
+
+const labels = {
+  default: 'Project',
+  mobile: 'Mobile',
+  web: 'Web',
+  fullstack: 'Full Stack',
+};
+---
+
+<span
+  class={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-wide ${variants[variant]} ${className}`}
+>
+  {labels[variant]}
+</span>

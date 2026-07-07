@@ -1,43 +1,126 @@
-# Astro Starter Kit: Minimal
+# Jensen Manalo — Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
+A modern, production-ready portfolio website built with **Astro**, **React**, and **Tailwind CSS**. Designed for IT students showcasing technical skills, projects, and professional experience.
+
+## Tech Stack
+
+- [Astro](https://astro.build/) — Static site generation with islands architecture
+- [React](https://react.dev/) — Interactive UI components
+- [Tailwind CSS](https://tailwindcss.com/) — Utility-first styling
+- [TypeScript](https://www.typescriptlang.org/) — Type safety
+- [Framer Motion](https://www.framer.com/motion/) — Animations
+- [Formspree](https://formspree.io/) — Contact form handling
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+
+### Installation
+
+```bash
+npm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+### Environment Variables
 
-## 🚀 Project Structure
+Copy the example env file and add your Formspree form ID:
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+cp .env.example .env
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Edit `.env`:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+```
+PUBLIC_FORMSPREE_ID=your_formspree_form_id
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+To get a Formspree ID:
+1. Sign up at [formspree.io](https://formspree.io/)
+2. Create a new form
+3. Copy the form ID from your form endpoint URL
 
-## 🧞 Commands
+### Development
 
-All commands are run from the root of the project, from a terminal:
+```bash
+npm run dev
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+Open [http://localhost:4321](http://localhost:4321)
 
-## 👀 Want to learn more?
+### Production Build
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```bash
+npm run build
+npm run preview
+```
+
+## Customizing Content
+
+All portfolio content lives in `src/data/` — no component changes needed:
+
+| File | Contents |
+|------|----------|
+| `profile.ts` | Name, bio, social links, stats |
+| `skills.ts` | Skill categories and proficiency levels |
+| `projects.ts` | Featured projects |
+| `experience.ts` | Work and leadership experience |
+| `education.ts` | University and coursework |
+| `certifications.ts` | Certificates |
+| `navigation.ts` | Nav and footer links |
+
+### Replacing Placeholder Assets
+
+| Asset | Location |
+|-------|----------|
+| Profile photo | Replace `public/profile-placeholder.svg` |
+| Resume PDF | Replace `public/resume.pdf` |
+| Project screenshots | Replace files in `public/projects/` |
+| Certificate images | Replace files in `public/certificates/` |
+
+Update image paths in the corresponding data files if filenames change.
+
+## Deployment
+
+### Vercel
+
+```bash
+npm run build
+npx vercel --prod
+```
+
+Or connect your GitHub repo at [vercel.com](https://vercel.com) — Astro is auto-detected.
+
+Set `PUBLIC_FORMSPREE_ID` in Vercel environment variables.
+
+### Netlify
+
+```bash
+npm run build
+npx netlify deploy --prod --dir=dist
+```
+
+Or connect your GitHub repo at [netlify.com](https://netlify.com).
+
+Set `PUBLIC_FORMSPREE_ID` in Netlify environment variables.
+
+## Project Structure
+
+```
+src/
+├── assets/          # Static assets (optional)
+├── components/      # UI and section components
+├── data/            # Editable content (start here)
+├── layouts/         # Page layouts
+├── pages/           # Routes
+├── styles/          # Global CSS
+├── types/           # TypeScript interfaces
+└── utils/           # Helper functions
+```
+
+## License
+
+MIT

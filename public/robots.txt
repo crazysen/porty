@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jensenmanalo.dev/sitemap-index.xml

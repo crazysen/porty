@@ -1,0 +1,15 @@
+---
+import SectionHeading from '@/components/UI/SectionHeading.astro';
+import SkillsSection from '@/components/Skills/SkillsSection';
+import { skillCategories } from '@/data/skills';
+---
+
+<section id="skills" class="relative section-padding bg-[var(--bg-secondary)]">
+  <div class="section-container">
+    <SectionHeading
+      title="Technical Skills"
+      subtitle="Technologies and tools I've learned through coursework and projects"
+    />
+    <SkillsSection client:visible categories={skillCategories} />
+  </div>
+</section>

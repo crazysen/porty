@@ -1,0 +1,99 @@
+---
+import Button from '@/components/UI/Button.astro';
+import Typewriter from '@/components/Hero/Typewriter';
+import { profile, socialLinks } from '@/data/profile';
+import { Icon } from 'astro-icon/components';
+---
+
+<section id="home" class="relative flex min-h-screen items-center section-padding">
+  <div class="section-container w-full">
+    <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <!-- Text content -->
+      <div class="order-2 text-center lg:order-1 lg:text-left">
+        <p class="mb-3 text-sm font-medium uppercase tracking-widest text-accent-cyan">
+          Hello, I'm
+        </p>
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+          {profile.name}
+        </h1>
+        <p class="mt-2 text-lg text-[var(--text-secondary)] sm:text-xl">
+          {profile.role}
+        </p>
+        <p class="mt-4 text-base text-[var(--text-muted)] sm:text-lg">
+          <Typewriter client:visible strings={profile.typewriterStrings} />
+        </p>
+        <p class="mt-6 max-w-lg text-[var(--text-secondary)] lg:max-w-none">
+          {profile.tagline}
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+          <Button href={profile.resumeUrl} variant="primary" size="lg" download>
+            <Icon name="lucide:download" class="h-5 w-5" />
+            Download Resume
+          </Button>
+          <Button href="#contact" variant="outline" size="lg">
+            <Icon name="lucide:mail" class="h-5 w-5" />
+            Contact Me
+          </Button>
+        </div>
+
+        <div class="mt-8 flex items-center justify-center gap-4 lg:justify-start">
+          {
+            socialLinks.map((link) => (
+              <a
+                href={link.url}
+                target={link.url.startsWith('mailto') ? undefined : '_blank'}
+                rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+                class="focus-ring flex h-11 w-11 items-center justify-center rounded-xl border border-[var(--glass-border)] text-[var(--text-secondary)] transition-all hover:scale-110 hover:border-accent-purple/50 hover:text-accent-cyan hover:shadow-lg hover:shadow-accent-purple/10"
+                aria-label={link.name}
+              >
+                <Icon name={link.icon} class="h-5 w-5" />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Profile image -->
+      <div class="order-1 flex justify-center lg:order-2">
+        <div class="relative">
+          <div class="absolute inset-0 rounded-full bg-gradient-to-r from-accent-blue via-accent-purple to-accent-cyan blur-2xl opacity-40 animate-pulse-glow"></div>
+          <div class="relative rounded-full bg-gradient-to-r from-accent-blue via-accent-purple to-accent-cyan p-1">
+            <img
+              src={profile.image}
+              alt={`${profile.name} profile photo`}
+              width="320"
+              height="320"
+              class="h-64 w-64 rounded-full bg-[var(--bg-secondary)] object-cover sm:h-80 sm:w-80"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="mt-16 flex justify-center">
+      <a
+        href="#about"
+        class="flex flex-col items-center gap-2 text-[var(--text-muted)] transition-colors hover:text-accent-cyan"
+        aria-label="Scroll to about section"
+      >
+        <span class="text-xs uppercase tracking-widest">Scroll</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          class="animate-bounce-slow"
+          aria-hidden="true"
+        >
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

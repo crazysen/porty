@@ -1,0 +1,15 @@
+---
+import SectionHeading from '@/components/UI/SectionHeading.astro';
+import CertificatesGrid from '@/components/Certificates/CertificatesGrid';
+import { certifications } from '@/data/certifications';
+---
+
+<section id="certificates" class="relative section-padding bg-[var(--bg-secondary)]">
+  <div class="section-container">
+    <SectionHeading
+      title="Certifications"
+      subtitle="Professional certifications and online courses completed"
+    />
+    <CertificatesGrid client:visible certificates={certifications} />
+  </div>
+</section>

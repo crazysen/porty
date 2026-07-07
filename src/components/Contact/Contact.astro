@@ -1,0 +1,15 @@
+---
+import SectionHeading from '@/components/UI/SectionHeading.astro';
+import ContactSection from '@/components/Contact/ContactSection';
+import { contact, socialLinks } from '@/data/profile';
+---
+
+<section id="contact" class="relative section-padding">
+  <div class="section-container">
+    <SectionHeading
+      title="Get In Touch"
+      subtitle="Have a project in mind or want to connect? Send me a message"
+    />
+    <ContactSection client:visible contact={contact} socialLinks={socialLinks} />
+  </div>
+</section>

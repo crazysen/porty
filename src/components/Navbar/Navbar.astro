@@ -1,0 +1,128 @@
+---
+import ThemeToggle from '@/components/UI/ThemeToggle';
+import Button from '@/components/UI/Button.astro';
+import { navLinks } from '@/data/navigation';
+import { profile } from '@/data/profile';
+---
+
+<header
+  id="navbar"
+  class="fixed top-0 right-0 left-0 z-50 transition-all duration-300"
+>
+  <nav
+    class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+    aria-label="Main navigation"
+  >
+    <a
+      href="#home"
+      class="text-lg font-bold tracking-tight transition-opacity hover:opacity-80"
+    >
+      <span class="gradient-text">{profile.name.split(' ')[0]}</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden items-center gap-1 lg:flex">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="rounded-lg px-3 py-2 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--glass-bg)] hover:text-[var(--text-primary)]"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-2">
+      <ThemeToggle client:load />
+      <Button href={profile.resumeUrl} variant="primary" size="sm" class="hidden sm:inline-flex" download>
+        Resume
+      </Button>
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        class="focus-ring rounded-lg p-2 text-[var(--text-primary)] lg:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="18" y2="18" />
+        </svg>
+        <svg id="menu-icon-close" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="glass mx-4 hidden rounded-2xl border p-4 lg:hidden"
+    role="dialog"
+    aria-label="Mobile navigation"
+  >
+    <ul class="flex flex-col gap-1">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="mobile-nav-link block rounded-lg px-4 py-3 text-sm text-[var(--text-secondary)] transition-colors hover:bg-[var(--glass-bg)] hover:text-[var(--text-primary)]"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="mt-2 border-t border-[var(--glass-border)] pt-2">
+        <a
+          href={profile.resumeUrl}
+          download
+          class="block rounded-lg bg-gradient-to-r from-accent-blue to-accent-purple px-4 py-3 text-center text-sm font-medium text-white"
+        >
+          Download Resume
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('menu-icon-open');
+  const iconClose = document.getElementById('menu-icon-close');
+  const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+  let menuOpen = false;
+
+  function toggleMenu() {
+    menuOpen = !menuOpen;
+    mobileMenu?.classList.toggle('hidden', !menuOpen);
+    iconOpen?.classList.toggle('hidden', menuOpen);
+    iconClose?.classList.toggle('hidden', !menuOpen);
+    menuBtn?.setAttribute('aria-expanded', String(menuOpen));
+    menuBtn?.setAttribute('aria-label', menuOpen ? 'Close menu' : 'Open menu');
+  }
+
+  menuBtn?.addEventListener('click', toggleMenu);
+  mobileLinks.forEach((link) => link.addEventListener('click', () => {
+    if (menuOpen) toggleMenu();
+  }));
+
+  window.addEventListener('scroll', () => {
+    if (!navbar) return;
+    if (window.scrollY > 50) {
+      navbar.classList.add('glass', 'shadow-lg', 'shadow-black/10');
+    } else {
+      navbar.classList.remove('glass', 'shadow-lg', 'shadow-black/10');
+    }
+  }, { passive: true });
+</script>

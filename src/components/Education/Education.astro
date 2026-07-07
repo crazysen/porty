@@ -1,0 +1,71 @@
+---
+import SectionHeading from '@/components/UI/SectionHeading.astro';
+import Card from '@/components/UI/Card.astro';
+import { education } from '@/data/education';
+import { Icon } from 'astro-icon/components';
+---
+
+<section id="education" class="relative section-padding">
+  <div class="section-container">
+    <SectionHeading
+      title="Education"
+      subtitle="My academic background and achievements"
+    />
+
+    <div class="grid gap-8 lg:grid-cols-2">
+      <Card hover>
+        <div class="flex items-start gap-4">
+          <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple">
+            <Icon name="lucide:graduation-cap" class="h-7 w-7 text-white" />
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold">{education.university}</h3>
+            <p class="mt-1 text-[var(--text-secondary)]">{education.degree}</p>
+            <p class="mt-1 text-sm text-[var(--text-muted)]">{education.location}</p>
+            <div class="mt-4 flex flex-wrap gap-3">
+              <span class="rounded-full border border-[var(--glass-border)] px-3 py-1 text-xs text-[var(--text-secondary)]">
+                {education.startYear} — {education.expectedGraduation}
+              </span>
+              {
+                education.gpa && (
+                  <span class="rounded-full border border-accent-purple/30 bg-accent-purple/10 px-3 py-1 text-xs text-accent-violet">
+                    GPA: {education.gpa}
+                  </span>
+                )
+              }
+            </div>
+          </div>
+        </div>
+      </Card>
+
+      <div class="space-y-6">
+        <Card>
+          <h3 class="mb-4 text-lg font-semibold">Relevant Coursework</h3>
+          <div class="flex flex-wrap gap-2">
+            {
+              education.coursework.map((course) => (
+                <span class="rounded-lg border border-[var(--glass-border)] bg-[var(--glass-bg)] px-3 py-1.5 text-sm text-[var(--text-secondary)]">
+                  {course}
+                </span>
+              ))
+            }
+          </div>
+        </Card>
+
+        <Card>
+          <h3 class="mb-4 text-lg font-semibold">Academic Achievements</h3>
+          <ul class="space-y-3">
+            {
+              education.achievements.map((achievement) => (
+                <li class="flex items-start gap-3 text-sm text-[var(--text-secondary)]">
+                  <Icon name="lucide:award" class="mt-0.5 h-4 w-4 shrink-0 text-accent-cyan" />
+                  {achievement}
+                </li>
+              ))
+            }
+          </ul>
+        </Card>
+      </div>
+    </div>
+  </div>
+</section>

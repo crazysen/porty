@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#12121f"/>
+  <rect x="20" y="20" width="360" height="260" rx="8" fill="#1a1a2e" stroke="#a78bfa" stroke-width="2"/>
+  <text x="200" y="120" text-anchor="middle" fill="#a78bfa" font-family="system-ui,sans-serif" font-size="16" font-weight="700">Meta Front-End</text>
+  <text x="200" y="150" text-anchor="middle" fill="#a0a0b8" font-family="system-ui,sans-serif" font-size="14">Developer</text>
+  <text x="200" y="200" text-anchor="middle" fill="#3b82f6" font-family="system-ui,sans-serif" font-size="12">Coursera / Meta</text>
+</svg>

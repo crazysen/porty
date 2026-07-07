@@ -1,0 +1,58 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  target?: string;
+  rel?: string;
+  download?: boolean | string;
+  type?: 'button' | 'submit' | 'reset';
+  id?: string;
+  'aria-label'?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  target,
+  rel,
+  download,
+  type = 'button',
+  id,
+  'aria-label': ariaLabel,
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-300 focus-ring';
+
+const variants = {
+  primary:
+    'bg-gradient-to-r from-accent-blue to-accent-purple text-white hover:shadow-lg hover:shadow-accent-purple/25 hover:scale-105',
+  outline:
+    'border border-[var(--glass-border)] bg-transparent text-[var(--text-primary)] hover:bg-[var(--glass-bg)] hover:border-accent-purple/50',
+  ghost: 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--glass-bg)]',
+};
+
+const sizes = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-2.5 text-sm',
+  lg: 'px-8 py-3 text-base',
+};
+
+const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+---
+
+{
+  href ? (
+    <a href={href} class={classes} target={target} rel={rel} download={download} aria-label={ariaLabel}>
+      <slot />
+    </a>
+  ) : (
+    <button type={type} class={classes} id={id} aria-label={ariaLabel}>
+      <slot />
+    </button>
+  )
+}

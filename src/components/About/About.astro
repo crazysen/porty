@@ -1,0 +1,71 @@
+---
+import SectionHeading from '@/components/UI/SectionHeading.astro';
+import Card from '@/components/UI/Card.astro';
+import StatsGrid from '@/components/About/StatsGrid';
+import {
+  profile,
+  stats,
+  academicTimeline,
+  interests,
+} from '@/data/profile';
+---
+
+<section id="about" class="relative section-padding">
+  <div class="section-container">
+    <SectionHeading
+      title="About Me"
+      subtitle="Get to know me — my journey, goals, and passion for technology"
+    />
+
+    <div class="grid gap-12 lg:grid-cols-2">
+      <div>
+        <Card>
+          <h3 class="mb-4 text-xl font-semibold">Who I Am</h3>
+          <p class="leading-relaxed text-[var(--text-secondary)]">{profile.bio}</p>
+          <h3 class="mb-3 mt-6 text-xl font-semibold">Career Objective</h3>
+          <p class="leading-relaxed text-[var(--text-secondary)]">{profile.careerObjective}</p>
+        </Card>
+
+        <Card class="mt-6">
+          <h3 class="mb-4 text-xl font-semibold">Tech Interests</h3>
+          <div class="flex flex-wrap gap-2">
+            {
+              interests.map((interest) => (
+                <span class="rounded-full border border-[var(--glass-border)] bg-[var(--glass-bg)] px-3 py-1.5 text-sm text-[var(--text-secondary)]">
+                  {interest}
+                </span>
+              ))
+            }
+          </div>
+        </Card>
+      </div>
+
+      <div>
+        <h3 class="mb-6 text-xl font-semibold">Academic Journey</h3>
+        <div class="relative space-y-0">
+          {
+            academicTimeline.map((item, index) => (
+              <div class="relative flex gap-6 pb-8 last:pb-0">
+                {index < academicTimeline.length - 1 && (
+                  <div class="absolute top-8 left-[19px] h-full w-px bg-gradient-to-b from-accent-blue to-accent-purple opacity-30" />
+                )}
+                <div class="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-accent-blue to-accent-purple text-xs font-bold text-white">
+                  {item.year.slice(2)}
+                </div>
+                <Card class="flex-1 !p-4" hover>
+                  <p class="text-xs font-medium text-accent-cyan">{item.year}</p>
+                  <h4 class="mt-1 font-semibold">{item.title}</h4>
+                  <p class="mt-1 text-sm text-[var(--text-secondary)]">{item.description}</p>
+                </Card>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16">
+      <StatsGrid client:visible stats={stats} />
+    </div>
+  </div>
+</section>

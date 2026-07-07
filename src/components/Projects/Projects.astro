@@ -1,0 +1,15 @@
+---
+import SectionHeading from '@/components/UI/SectionHeading.astro';
+import ProjectsGrid from '@/components/Projects/ProjectsGrid';
+import { projects } from '@/data/projects';
+---
+
+<section id="projects" class="relative section-padding">
+  <div class="section-container">
+    <SectionHeading
+      title="Featured Projects"
+      subtitle="Real-world applications built during my studies and personal development"
+    />
+    <ProjectsGrid client:visible projects={projects} />
+  </div>
+</section>
