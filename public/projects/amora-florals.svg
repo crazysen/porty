@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <defs>
+    <linearGradient id="amoraBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9d174d;stop-opacity:0.35"/>
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:0.25"/>
+      <stop offset="100%" style="stop-color:#22d3ee;stop-opacity:0.2"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="#12121f"/>
+  <rect width="600" height="400" fill="url(#amoraBg)"/>
+  <circle cx="160" cy="210" r="46" fill="#fb7185" fill-opacity="0.85"/>
+  <circle cx="198" cy="168" r="28" fill="#f472b6" fill-opacity="0.8"/>
+  <circle cx="132" cy="168" r="26" fill="#f43f5e" fill-opacity="0.75"/>
+  <circle cx="198" cy="248" r="24" fill="#e11d48" fill-opacity="0.7"/>
+  <circle cx="128" cy="246" r="22" fill="#fb7185" fill-opacity="0.75"/>
+  <rect x="154" y="248" width="10" height="70" rx="4" fill="#16a34a" fill-opacity="0.85"/>
+  <text x="360" y="185" text-anchor="middle" fill="#fda4af" font-family="system-ui,sans-serif" font-size="22" font-weight="700">Amora Florals</text>
+  <text x="360" y="220" text-anchor="middle" fill="#a0a0b8" font-family="system-ui,sans-serif" font-size="15">E-commerce · Laravel API</text>
+</svg>

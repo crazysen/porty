@@ -10,6 +10,8 @@ export interface Project {
   image: string;
   githubUrl?: string;
   liveUrl?: string;
+  pageUrl?: string;
+  pageLabel?: string;
 }
 
 export interface Skill {

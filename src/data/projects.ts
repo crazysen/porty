@@ -2,6 +2,24 @@ import type { Project } from '@/types';
 
 export const projects: Project[] = [
   {
+    id: 'amora-florals',
+    title: 'Amora Florals E-Commerce',
+    description:
+      'A flower-shop e-commerce platform with a Laravel API, admin dashboard, PayMongo payments, inventory, and delivery tracking. Built for academic submission with a full Crow’s Foot ERD.',
+    features: [
+      'Catalog, sizes, and customisable arrangements',
+      'Orders, PayMongo checkout, and delivery status',
+      'Inventory with low-stock and expiry tracking',
+      'Print-ready entity relationship diagram',
+    ],
+    technologies: ['Laravel', 'MySQL', 'React', 'PayMongo'],
+    category: 'fullstack',
+    image: '/projects/amora-florals.svg',
+    githubUrl: 'https://github.com/shaeijmnz/amora_web',
+    pageUrl: '/projects/amora-erd',
+    pageLabel: 'View ERD',
+  },
+  {
     id: 'mixie',
     title: 'Mixie Educational Mobile Game',
     description:

@@ -118,3 +118,18 @@ body {
 .skip-link {
   @apply sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-accent-blue focus:px-4 focus:py-2 focus:text-white;
 }
+
+@media print {
+  header,
+  footer,
+  .skip-link,
+  .no-print,
+  [aria-label="Back to top"] {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+}
