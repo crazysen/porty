@@ -1,0 +1,332 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import {
+  dataDictionary,
+  erdMeta,
+  frameworkTables,
+  relationships,
+  reviewNotes,
+  statusDomains,
+} from '@/data/amoraErd';
+import { profile } from '@/data/profile';
+
+const keyClass: Record<string, string> = {
+  PK: 'bg-amber-500/20 text-amber-300 border-amber-400/30',
+  FK: 'bg-sky-500/20 text-sky-300 border-sky-400/30',
+  UK: 'bg-violet-500/20 text-violet-300 border-violet-400/30',
+};
+---
+
+<BaseLayout
+  document
+  title={`ERD · ${erdMeta.system}`}
+  description="Crow's Foot entity relationship diagram and data dictionary for the Amora Florals e-commerce system."
+>
+  <article class="erd-document relative px-4 pt-28 pb-20 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl">
+      <header class="glass rounded-3xl p-6 sm:p-8">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-accent-cyan">
+          Database documentation
+        </p>
+        <h1 class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+          {erdMeta.system}
+        </h1>
+        <p class="mt-2 text-lg text-[var(--text-secondary)]">{erdMeta.subtitle}</p>
+        <dl class="mt-6 grid gap-3 text-sm sm:grid-cols-2">
+          <div>
+            <dt class="text-[var(--text-muted)]">Prepared by</dt>
+            <dd class="font-medium">{profile.name}</dd>
+          </div>
+          <div>
+            <dt class="text-[var(--text-muted)]">Notation</dt>
+            <dd class="font-medium">Crow’s Foot (logical ERD)</dd>
+          </div>
+          <div>
+            <dt class="text-[var(--text-muted)]">DBMS</dt>
+            <dd class="font-medium">{erdMeta.engine}</dd>
+          </div>
+          <div>
+            <dt class="text-[var(--text-muted)]">Schema source</dt>
+            <dd class="font-medium">Laravel migrations (implemented)</dd>
+          </div>
+        </dl>
+
+        <div class="no-print mt-6 flex flex-wrap gap-3">
+          <button
+            id="print-erd"
+            type="button"
+            class="focus-ring inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-accent-blue to-accent-purple px-5 py-2.5 text-sm font-medium text-white hover:shadow-lg hover:shadow-accent-purple/25"
+          >
+            Print / Save as PDF
+          </button>
+          <a
+            href="/erd/amora-florals-erd.svg"
+            download
+            class="focus-ring inline-flex items-center gap-2 rounded-xl border border-[var(--glass-border)] px-5 py-2.5 text-sm font-medium text-[var(--text-primary)] hover:border-accent-purple/50"
+          >
+            Download SVG
+          </a>
+          <a
+            href="https://github.com/shaeijmnz/amora_web"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="focus-ring inline-flex items-center gap-2 rounded-xl border border-[var(--glass-border)] px-5 py-2.5 text-sm font-medium text-[var(--text-primary)] hover:border-accent-purple/50"
+          >
+            GitHub repo
+          </a>
+        </div>
+      </header>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold">1. System overview</h2>
+        <p class="mt-3 max-w-3xl text-[var(--text-secondary)]">
+          Amora Florals is a flower-shop e-commerce system: customers order arrangements from a mobile/web store,
+          admins manage catalog and stock, PayMongo records payment, and a separate delivery record tracks the
+          drop-off. The ERD below documents the <strong>implemented Laravel schema</strong> — eight business tables
+          and the foreign keys that actually exist in migrations.
+        </p>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+          <li class="glass rounded-2xl p-4 text-sm text-[var(--text-secondary)]">
+            <span class="font-semibold text-[var(--text-primary)]">Accounts</span>
+            — <code>users</code> stores both customers and admins (<code>role</code>).
+          </li>
+          <li class="glass rounded-2xl p-4 text-sm text-[var(--text-secondary)]">
+            <span class="font-semibold text-[var(--text-primary)]">Catalog</span>
+            — <code>products</code> and <code>product_sizes</code> define sellable arrangements.
+          </li>
+          <li class="glass rounded-2xl p-4 text-sm text-[var(--text-secondary)]">
+            <span class="font-semibold text-[var(--text-primary)]">Inventory</span>
+            — <code>categories</code> and <code>inventory_items</code> track flowers, materials, and add-ons.
+          </li>
+          <li class="glass rounded-2xl p-4 text-sm text-[var(--text-secondary)]">
+            <span class="font-semibold text-[var(--text-primary)]">Fulfillment</span>
+            — <code>orders</code>, <code>order_items</code>, and optional <code>deliveries</code>.
+          </li>
+        </ul>
+      </section>
+
+      <section class="mt-12 erd-figure">
+        <h2 class="text-2xl font-semibold">2. Logical ERD (Crow’s Foot)</h2>
+        <p class="mt-3 text-sm text-[var(--text-secondary)]">
+          Solid lines are mandatory foreign keys. Dashed lines with a circle are optional (nullable) foreign keys.
+          PK / FK / UK markers appear on each attribute. Print in landscape for best results.
+        </p>
+        <figure class="mt-6 overflow-x-auto rounded-2xl border border-[var(--glass-border)] bg-white p-3">
+          <img
+            src="/erd/amora-florals-erd.svg"
+            alt="Crow's Foot entity relationship diagram of Amora Florals showing users, orders, order items, deliveries, products, product sizes, categories, and inventory items."
+            class="mx-auto h-auto w-full min-w-[960px]"
+          />
+          <figcaption class="mt-3 px-2 pb-1 text-center text-xs text-slate-600">
+            Figure 1. Logical ERD of the Amora Florals e-commerce database (implemented schema).
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold">3. Relationships and cardinality</h2>
+        <div class="mt-5 overflow-x-auto rounded-2xl border border-[var(--glass-border)]">
+          <table class="w-full min-w-[720px] text-left text-sm">
+            <thead class="bg-[var(--bg-tertiary)] text-xs uppercase tracking-wide text-[var(--text-muted)]">
+              <tr>
+                <th class="px-4 py-3 font-semibold">Entities</th>
+                <th class="px-4 py-3 font-semibold">Type</th>
+                <th class="px-4 py-3 font-semibold">Cardinality</th>
+                <th class="px-4 py-3 font-semibold">Join</th>
+                <th class="px-4 py-3 font-semibold">On delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                relationships.map((rel) => (
+                  <tr class="border-t border-[var(--glass-border)] align-top">
+                    <td class="px-4 py-3">
+                      <div class="font-medium">
+                        {rel.from} → {rel.to}
+                      </div>
+                      <p class="mt-1 text-[var(--text-secondary)]">{rel.description}</p>
+                    </td>
+                    <td class="px-4 py-3 whitespace-nowrap">{rel.type}</td>
+                    <td class="px-4 py-3 whitespace-nowrap font-mono">{rel.cardinality}</td>
+                    <td class="px-4 py-3 font-mono text-xs text-[var(--text-secondary)]">{rel.via}</td>
+                    <td class="px-4 py-3 whitespace-nowrap">{rel.onDelete}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold">4. Controlled vocabularies</h2>
+        <p class="mt-3 text-sm text-[var(--text-secondary)]">
+          Status columns are VARCHAR in MySQL (not native ENUMs) but the application only writes these values.
+        </p>
+        <div class="mt-5 grid gap-4 md:grid-cols-2">
+          {
+            statusDomains.map((domain) => (
+              <div class="glass rounded-2xl p-4">
+                <h3 class="font-mono text-sm font-semibold">{domain.name}</h3>
+                <p class="mt-2 flex flex-wrap gap-1.5">
+                  {domain.values.map((value) => (
+                    <span class="rounded-md border border-[var(--glass-border)] px-2 py-0.5 font-mono text-xs text-[var(--text-secondary)]">
+                      {value}
+                    </span>
+                  ))}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold">5. Data dictionary</h2>
+        <div class="mt-6 space-y-8">
+          {
+            dataDictionary.map((table) => (
+              <div class="dictionary-table overflow-hidden rounded-2xl border border-[var(--glass-border)]">
+                <div class="bg-[var(--bg-tertiary)] px-4 py-3">
+                  <h3 class="font-mono text-lg font-semibold">{table.name}</h3>
+                  <p class="mt-1 text-sm text-[var(--text-secondary)]">{table.purpose}</p>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full min-w-[640px] text-left text-sm">
+                    <thead class="text-xs uppercase tracking-wide text-[var(--text-muted)]">
+                      <tr>
+                        <th class="px-4 py-2 font-semibold">Attribute</th>
+                        <th class="px-4 py-2 font-semibold">Type</th>
+                        <th class="px-4 py-2 font-semibold">Key</th>
+                        <th class="px-4 py-2 font-semibold">Null</th>
+                        <th class="px-4 py-2 font-semibold">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {table.fields.map((field) => (
+                        <tr class="border-t border-[var(--glass-border)] align-top">
+                          <td class="px-4 py-2 font-mono">{field.name}</td>
+                          <td class="px-4 py-2 font-mono text-xs text-[var(--text-secondary)]">
+                            {field.type}
+                            {field.defaultValue && (
+                              <span class="block text-[var(--text-muted)]">default {field.defaultValue}</span>
+                            )}
+                          </td>
+                          <td class="px-4 py-2">
+                            {field.key ? (
+                              <span class:list={['rounded border px-1.5 py-0.5 text-[10px] font-bold', keyClass[field.key]]}>
+                                {field.key}
+                              </span>
+                            ) : (
+                              <span class="text-[var(--text-muted)]">—</span>
+                            )}
+                          </td>
+                          <td class="px-4 py-2">{field.nullable ? 'YES' : 'NO'}</td>
+                          <td class="px-4 py-2 text-[var(--text-secondary)]">{field.description}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold">6. Framework tables (not on the ERD)</h2>
+        <p class="mt-3 text-sm text-[var(--text-secondary)]">
+          Laravel also creates supporting tables that are not business entities. They are omitted from Figure 1 so the
+          academic ERD stays focused on the flower-shop domain.
+        </p>
+        <ul class="mt-4 flex flex-wrap gap-2">
+          {
+            frameworkTables.map((name) => (
+              <li class="rounded-full border border-[var(--glass-border)] px-3 py-1 font-mono text-xs text-[var(--text-secondary)]">
+                {name}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold">7. Schema review notes</h2>
+        <p class="mt-3 text-sm text-[var(--text-secondary)]">
+          These notes are for defending the ERD: they explain what the running system actually stores versus the
+          earlier Supabase plan.
+        </p>
+        <ol class="mt-5 space-y-4">
+          {
+            reviewNotes.map((note, index) => (
+              <li class="glass rounded-2xl p-4">
+                <h3 class="font-semibold">
+                  {index + 1}. {note.title}
+                </h3>
+                <p class="mt-2 text-sm text-[var(--text-secondary)]">{note.detail}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+    </div>
+  </article>
+</BaseLayout>
+
+<script>
+  document.getElementById('print-erd')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  @media print {
+    :global(header),
+    :global(footer),
+    :global(.skip-link),
+    :global(.no-print) {
+      display: none !important;
+    }
+
+    :global(body) {
+      background: #ffffff !important;
+      color: #111827 !important;
+    }
+
+    :global(.glass) {
+      background: #ffffff !important;
+      border: 1px solid #e5e7eb !important;
+      backdrop-filter: none !important;
+      box-shadow: none !important;
+    }
+
+    .erd-document {
+      padding: 12px !important;
+    }
+
+    .erd-figure {
+      break-before: page;
+    }
+
+    .dictionary-table {
+      break-inside: avoid;
+    }
+
+    :global(h1),
+    :global(h2),
+    :global(h3),
+    :global(p),
+    :global(td),
+    :global(th),
+    :global(dd),
+    :global(dt),
+    :global(li) {
+      color: #111827 !important;
+    }
+
+    :global(.gradient-text) {
+      -webkit-text-fill-color: #111827 !important;
+      background: none !important;
+      color: #111827 !important;
+    }
+  }
+</style>

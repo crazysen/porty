@@ -63,7 +63,20 @@ function ProjectCard({ project, index }: ProjectCardProps) {
             ))}
           </div>
 
-          <div className="mt-5 flex gap-3">
+          <div className="mt-5 flex flex-wrap gap-3">
+            {project.pageUrl && (
+              <a
+                href={project.pageUrl}
+                className="focus-ring flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-accent-blue to-accent-purple px-3 py-2 text-xs font-medium text-white transition-all hover:shadow-lg hover:shadow-accent-purple/20"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <ellipse cx="12" cy="5" rx="9" ry="3" />
+                  <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                  <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3" />
+                </svg>
+                {project.pageLabel ?? 'Open page'}
+              </a>
+            )}
             {project.githubUrl && (
               <a
                 href={project.githubUrl}

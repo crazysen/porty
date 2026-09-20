@@ -10,11 +10,13 @@ import { contact, socialLinks } from '@/data/profile';
 interface Props {
   title?: string;
   description?: string;
+  document?: boolean;
 }
 
 const {
   title = `${profile.name} | ${profile.role}`,
   description = profile.bio,
+  document = false,
 } = Astro.props;
 
 const siteUrl = Astro.site?.toString() ?? 'https://jensenmanalo.dev';
@@ -59,9 +61,9 @@ const jsonLd = {
     <title>{title}</title>
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
-  <body class="relative min-h-screen overflow-x-hidden antialiased">
+  <body class:list={['relative min-h-screen overflow-x-hidden antialiased', document && 'document-page']}>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <FloatingShapes />
+    {!document && <FloatingShapes />}
     <Navbar />
     <main id="main-content">
       <slot />
