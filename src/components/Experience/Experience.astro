@@ -50,9 +50,11 @@ const typeLabels: Record<string, string> = {
                       {exp.organization} · {exp.location}
                     </p>
                   </div>
-                  <span class="shrink-0 rounded-full border border-[var(--glass-border)] px-3 py-1 text-xs text-[var(--text-muted)]">
-                    {exp.startDate} — {exp.endDate}
-                  </span>
+                  {(exp.startDate || exp.endDate) && (
+                    <span class="shrink-0 rounded-full border border-[var(--glass-border)] px-3 py-1 text-xs text-[var(--text-muted)]">
+                      {[exp.startDate, exp.endDate].filter(Boolean).join(' — ')}
+                    </span>
+                  )}
                 </div>
                 <p class="mt-3 text-sm text-[var(--text-secondary)]">{exp.description}</p>
                 <ul class="mt-4 space-y-2">
