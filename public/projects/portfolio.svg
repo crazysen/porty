@@ -8,6 +8,6 @@
   </defs>
   <rect width="600" height="400" fill="#12121f"/>
   <rect width="600" height="400" fill="url(#g4)"/>
-  <text x="300" y="190" text-anchor="middle" fill="#f0f0f5" font-family="system-ui,sans-serif" font-size="26" font-weight="700">Portfolio Website</text>
-  <text x="300" y="225" text-anchor="middle" fill="#a0a0b8" font-family="system-ui,sans-serif" font-size="16">Astro + React + Tailwind</text>
+  <text x="300" y="190" text-anchor="middle" fill="#f0f0f5" font-family="system-ui,sans-serif" font-size="26" font-weight="700">Amora Flora</text>
+  <text x="300" y="225" text-anchor="middle" fill="#a0a0b8" font-family="system-ui,sans-serif" font-size="16">E-commerce Mobile and Web</text>
 </svg>
