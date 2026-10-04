@@ -28,6 +28,14 @@ function SkillBar({ skill, index }: SkillBarProps) {
     return () => observer.disconnect();
   }, [skill.level]);
 
+  if (skill.level <= 0) {
+    return (
+      <div className="rounded-lg border border-[var(--glass-border)] bg-[var(--glass-bg)] px-3 py-2 text-sm font-medium text-[var(--text-primary)]">
+        {skill.name}
+      </div>
+    );
+  }
+
   return (
     <div ref={ref} className="space-y-2" style={{ transitionDelay: `${index * 50}ms` }}>
       <div className="flex items-center justify-between">
