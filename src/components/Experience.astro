@@ -1,0 +1,42 @@
+---
+import { Briefcase, MapPin } from "lucide-react";
+import { experience } from "../data/experience";
+---
+
+<section id="experience" class="px-4 py-20 sm:px-6 sm:py-28">
+  <div class="mx-auto max-w-4xl">
+    <div data-reveal class="mb-12 text-center">
+      <p class="section-kicker">// experience</p>
+      <h2 class="section-title">Work Experience</h2>
+    </div>
+
+    <ol class="relative space-y-8 border-l border-line pl-8 sm:pl-10">
+      {
+        experience.map((job) => (
+          <li data-reveal class="relative">
+            <span class="absolute top-6 -left-[2.95rem] grid size-8 place-items-center rounded-full border border-blue-400/40 bg-navy text-cyan-300 shadow-[0_0_20px_-4px_rgb(59_130_246/0.7)] sm:-left-[3.45rem]">
+              <Briefcase size={14} />
+            </span>
+            <article class="panel panel-hover p-6 sm:p-7">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-semibold">{job.role}</h3>
+                  <p class="text-cyan-300/90">{job.organization}</p>
+                </div>
+                <span class="chip">{job.period}</span>
+              </div>
+              <p class="mt-2 inline-flex items-center gap-1.5 text-sm text-ink-soft">
+                <MapPin size={14} /> {job.location}
+              </p>
+              <ul class="mt-4 list-disc space-y-1.5 pl-5 text-ink-soft marker:text-blue-400">
+                {job.points.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,26 @@
+---
+import { Mail } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
+import { profile } from "../data/profile";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line px-4 py-8 sm:px-6">
+  <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
+    <p class="font-mono text-xs text-slate-500">
+      <span class="text-gradient font-bold">&lt;/&gt;</span> &copy; {year} {profile.name} · Built with Astro, React & Tailwind
+    </p>
+    <div class="flex items-center gap-2">
+      <a href={profile.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="icon-btn size-9">
+        <GithubIcon size={16} />
+      </a>
+      <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="icon-btn size-9">
+        <LinkedinIcon size={16} />
+      </a>
+      <a href={`mailto:${profile.email}`} aria-label="Email" class="icon-btn size-9">
+        <Mail size={16} />
+      </a>
+    </div>
+  </div>
+</footer>

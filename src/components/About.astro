@@ -1,0 +1,71 @@
+---
+import { BookOpen, GraduationCap, Languages, MapPin } from "lucide-react";
+import { profile } from "../data/profile";
+import { projects } from "../data/projects";
+import { certifications } from "../data/certifications";
+
+const { education } = profile;
+
+const stats = [
+  { value: `${projects.length}`, label: "Projects built" },
+  { value: `${certifications.length}`, label: "Certifications" },
+  { value: "2023", label: "Started BSIT" },
+];
+---
+
+<section id="about" class="px-4 py-20 sm:px-6 sm:py-28">
+  <div class="mx-auto max-w-6xl">
+    <div class="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
+      <article data-reveal class="panel p-8">
+        <p class="section-kicker">// about me</p>
+        <h2 class="section-title">About Me</h2>
+        <p class="mt-5 leading-relaxed text-ink-soft">
+          I'm <span class="text-white">{profile.name}</span>, an IT student from Cavite who loves building things for
+          the web and for phones. I enjoy the whole journey: designing in Figma, writing the frontend, wiring up a
+          database, and polishing the little details that make an app feel nice to use.
+        </p>
+        <p class="mt-4 leading-relaxed text-ink-soft">
+          Recently I've been building restaurant ordering systems with Flutter and Laravel, an AI-powered legal
+          consultation app for my capstone, and leveling up with AI-assisted development tools like Claude Code.
+        </p>
+
+        <div class="mt-8 grid grid-cols-3 gap-3">
+          {
+            stats.map((s) => (
+              <div class="rounded-xl border border-line bg-night/50 px-3 py-4 text-center">
+                <p class="text-gradient font-display text-2xl font-bold sm:text-3xl">{s.value}</p>
+                <p class="mt-1 text-xs text-ink-soft">{s.label}</p>
+              </div>
+            ))
+          }
+        </div>
+
+        <div class="mt-6 flex flex-wrap gap-2">
+          <span class="chip gap-1.5"><MapPin size={13} /> {profile.location}</span>
+          <span class="chip gap-1.5"><Languages size={13} /> {profile.languages.join(" / ")}</span>
+        </div>
+      </article>
+
+      <div class="grid gap-6">
+        <article data-reveal class="panel panel-hover p-7">
+          <div class="mb-4 grid size-11 place-items-center rounded-xl border border-blue-400/30 bg-blue-500/10 text-blue-300">
+            <GraduationCap size={22} />
+          </div>
+          <h3 class="text-lg font-semibold">{education.school}</h3>
+          <p class="mt-1 text-slate-300">{education.degree}</p>
+          <p class="text-sm text-ink-soft">{education.major}</p>
+          <p class="mt-3 font-mono text-xs text-cyan-300">{education.period}</p>
+        </article>
+
+        <article data-reveal class="panel p-7">
+          <h3 class="flex items-center gap-2 font-semibold">
+            <BookOpen size={18} className="text-cyan-300" /> Relevant coursework
+          </h3>
+          <ul class="mt-4 flex flex-wrap gap-2">
+            {education.coursework.map((course) => <li class="chip">{course}</li>)}
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>

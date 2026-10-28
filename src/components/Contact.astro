@@ -1,0 +1,70 @@
+---
+import { Mail, MapPin, Phone } from "lucide-react";
+import ContactForm from "./ContactForm";
+import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
+import { profile } from "../data/profile";
+
+const channels = [
+  { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: "mail" },
+  { label: "Phone", value: profile.phone, href: profile.phoneHref, icon: "phone" },
+  { label: "Location", value: profile.location, icon: "pin" },
+];
+---
+
+<section id="contact" class="relative overflow-hidden px-4 py-20 sm:px-6 sm:py-28">
+  <div class="pointer-events-none absolute bottom-0 left-1/2 h-80 w-[48rem] -translate-x-1/2 rounded-full bg-blue-600/15 blur-3xl"></div>
+
+  <div class="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-2">
+    <div data-reveal>
+      <p class="section-kicker">// contact</p>
+      <h2 class="section-title">Let's Connect</h2>
+      <p class="section-lead">
+        Have a project in mind, an internship opening, or want to discuss a collaboration? I'd love to hear from you.
+      </p>
+
+      <ul class="mt-8 grid gap-3">
+        {
+          channels.map((c) => {
+            const content = (
+              <>
+                <span class="grid size-11 shrink-0 place-items-center rounded-xl border border-blue-400/30 bg-blue-500/10 text-blue-300">
+                  {c.icon === "mail" && <Mail size={18} />}
+                  {c.icon === "phone" && <Phone size={18} />}
+                  {c.icon === "pin" && <MapPin size={18} />}
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-mono text-xs text-slate-500">{c.label}</span>
+                  <span class="block truncate text-slate-200">{c.value}</span>
+                </span>
+              </>
+            );
+            return (
+              <li>
+                {c.href ? (
+                  <a href={c.href} class="panel panel-hover flex items-center gap-4 p-4">
+                    {content}
+                  </a>
+                ) : (
+                  <div class="panel flex items-center gap-4 p-4">{content}</div>
+                )}
+              </li>
+            );
+          })
+        }
+      </ul>
+
+      <div class="mt-6 flex items-center gap-3">
+        <a href={profile.github} target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="GitHub profile">
+          <GithubIcon size={18} />
+        </a>
+        <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="LinkedIn profile">
+          <LinkedinIcon size={18} />
+        </a>
+      </div>
+    </div>
+
+    <div data-reveal>
+      <ContactForm client:visible email={profile.email} />
+    </div>
+  </div>
+</section>

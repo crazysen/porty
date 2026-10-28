@@ -1,0 +1,63 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar";
+import Hero from "../components/Hero.astro";
+import Skills from "../components/Skills";
+import Projects from "../components/Projects";
+import About from "../components/About.astro";
+import Experience from "../components/Experience.astro";
+import Certifications from "../components/Certifications";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout>
+  <Navbar client:load />
+  <main>
+    <Hero />
+
+    <section id="skills" class="border-y border-line bg-navy/60 px-4 py-20 sm:px-6 sm:py-28">
+      <div class="mx-auto max-w-6xl">
+        <div data-reveal class="mb-10 text-center">
+          <p class="section-kicker">// tech stack</p>
+          <h2 class="section-title">Tech Stack & Skills</h2>
+          <p class="section-lead mx-auto">
+            The languages, frameworks, and tools I use to design and ship web and mobile apps.
+          </p>
+        </div>
+        <Skills client:load />
+      </div>
+    </section>
+
+    <section id="projects" class="px-4 py-20 sm:px-6 sm:py-28">
+      <div class="mx-auto max-w-6xl">
+        <div data-reveal class="mb-10 text-center">
+          <p class="section-kicker">// projects</p>
+          <h2 class="section-title">Featured Projects</h2>
+          <p class="section-lead mx-auto">A selection of my recent work. Click a project to see its highlights and tech.</p>
+        </div>
+        <Projects client:load />
+      </div>
+    </section>
+
+    <div class="border-y border-line bg-navy/60">
+      <About />
+    </div>
+
+    <Experience />
+
+    <section id="certifications" class="border-y border-line bg-navy/60 px-4 py-20 sm:px-6 sm:py-28">
+      <div class="mx-auto max-w-6xl">
+        <div data-reveal class="mb-8 text-center">
+          <p class="section-kicker">// certifications</p>
+          <h2 class="section-title">Certifications</h2>
+          <p class="section-lead mx-auto">Swipe, drag, or use the arrows to explore my certifications.</p>
+        </div>
+        <Certifications client:load />
+      </div>
+    </section>
+
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
