@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Code2 } from "lucide-react";
+import TiltCard from "./TiltCard";
 import { skillCategories, type Skill } from "../data/skills";
 
 function readableColor(hex: string) {
@@ -70,18 +71,24 @@ export default function Skills() {
           aria-label={active.label}
           className="flex flex-wrap justify-center gap-4"
           initial="hidden"
-          animate="show"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
           exit="hidden"
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05 } } }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
         >
           {active.skills.map((skill) => (
             <motion.li
               key={skill.name}
               className="w-[calc(50%-0.5rem)] sm:w-44"
-              variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }}
-              transition={{ type: "spring", stiffness: 300, damping: 24 }}
+              variants={{
+                hidden: { opacity: 0, y: 24, scale: 0.92 },
+                show: { opacity: 1, y: 0, scale: 1 },
+              }}
+              transition={{ type: "spring", stiffness: 260, damping: 22 }}
             >
-              <SkillTile skill={skill} />
+              <TiltCard maxTilt={10}>
+                <SkillTile skill={skill} />
+              </TiltCard>
             </motion.li>
           ))}
         </motion.ul>

@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Check, ExternalLink, LayoutGrid, Monitor, Scale, Search, Smartphone, Store } from "lucide-react";
 import Modal from "./Modal";
+import TiltCard from "./TiltCard";
 import { GithubIcon } from "./icons/BrandIcons";
 import { projects, type Project, type ProjectIcon } from "../data/projects";
 import { accentClasses } from "../data/accents";
@@ -117,11 +118,13 @@ export default function Projects() {
               <motion.li
                 key={project.slug}
                 layout
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 40, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-80px" }}
                 exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ type: "spring", stiffness: 260, damping: 26, delay: i * 0.05 }}
+                transition={{ type: "spring", stiffness: 220, damping: 24, delay: i * 0.1 }}
               >
+                <TiltCard spotlight>
                 <article
                   className="panel panel-hover group relative flex h-full cursor-pointer flex-col overflow-hidden p-6"
                   onClick={() => setSelected(project)}
@@ -176,6 +179,7 @@ export default function Projects() {
                     )}
                   </div>
                 </article>
+                </TiltCard>
               </motion.li>
             );
           })}

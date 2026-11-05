@@ -1,20 +1,25 @@
 ---
 import { Briefcase, MapPin } from "lucide-react";
+import SectionHeading from "./SectionHeading.astro";
 import { experience } from "../data/experience";
 ---
 
 <section id="experience" class="px-4 py-20 sm:px-6 sm:py-28">
   <div class="mx-auto max-w-4xl">
-    <div data-reveal class="mb-12 text-center">
-      <p class="section-kicker">// experience</p>
-      <h2 class="section-title">Work Experience</h2>
-    </div>
+    <SectionHeading kicker="experience" title="Work Experience" class="mb-12" />
 
-    <ol class="relative space-y-8 border-l border-line pl-8 sm:pl-10">
+    <div data-timeline class="relative pl-8 sm:pl-10">
+      <span aria-hidden="true" class="absolute inset-y-0 left-0 w-px bg-line"></span>
+      <span
+        aria-hidden="true"
+        class="timeline-fill absolute inset-y-0 left-0 w-px origin-top bg-linear-to-b from-blue-400 via-sky-400 to-cyan-300 shadow-[0_0_10px_rgb(56_189_248/0.8)]"
+      >
+      </span>
+      <ol class="space-y-8">
       {
-        experience.map((job) => (
-          <li data-reveal class="relative">
-            <span class="absolute top-6 -left-[2.95rem] grid size-8 place-items-center rounded-full border border-blue-400/40 bg-navy text-cyan-300 shadow-[0_0_20px_-4px_rgb(59_130_246/0.7)] sm:-left-[3.45rem]">
+        experience.map((job, i) => (
+          <li data-reveal={i % 2 === 0 ? "right" : "left"} class="relative">
+            <span class="timeline-dot absolute top-6 -left-[2.95rem] grid size-8 place-items-center rounded-full border border-blue-400/40 bg-navy text-cyan-300 shadow-[0_0_20px_-4px_rgb(59_130_246/0.7)] sm:-left-[3.45rem]">
               <Briefcase size={14} />
             </span>
             <article class="panel panel-hover p-6 sm:p-7">
@@ -37,6 +42,7 @@ import { experience } from "../data/experience";
           </li>
         ))
       }
-    </ol>
+      </ol>
+    </div>
   </div>
 </section>

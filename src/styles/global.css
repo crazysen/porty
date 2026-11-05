@@ -119,9 +119,71 @@ h1, h2, h3, h4 {
     transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+.js [data-reveal="left"] {
+  transform: translateX(-48px);
+}
+
+.js [data-reveal="right"] {
+  transform: translateX(48px);
+}
+
+.js [data-reveal="zoom"] {
+  transform: scale(0.94);
+}
+
 .js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
+}
+
+.reveal-word {
+  display: inline-block;
+}
+
+.js [data-reveal] .reveal-word {
+  opacity: 0;
+  transform: translateY(0.5em);
+  filter: blur(6px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.6s ease;
+  transition-delay: calc(120ms + var(--i) * 70ms);
+}
+
+.js [data-reveal].is-visible .reveal-word {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.js [data-reveal] .heading-line {
+  transform: scaleX(0);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s;
+}
+
+.js [data-reveal].is-visible .heading-line {
+  transform: scaleX(1);
+}
+
+.timeline-fill {
+  transform: scaleY(var(--progress, 1));
+}
+
+.js .timeline-dot {
+  border-color: var(--color-line);
+  color: #64748b;
+  box-shadow: none;
+  transition:
+    border-color 0.5s ease 0.2s,
+    color 0.5s ease 0.2s,
+    box-shadow 0.5s ease 0.2s;
+}
+
+.js [data-reveal].is-visible .timeline-dot {
+  border-color: rgb(96 165 250 / 0.5);
+  color: #67e8f9;
+  box-shadow: 0 0 20px -4px rgb(59 130 246 / 0.8);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -129,9 +191,12 @@ h1, h2, h3, h4 {
     scroll-behavior: auto;
   }
 
-  .js [data-reveal] {
+  .js [data-reveal],
+  .js [data-reveal] .reveal-word,
+  .js [data-reveal] .heading-line {
     opacity: 1;
     transform: none;
+    filter: none;
   }
 
   *, *::before, *::after {

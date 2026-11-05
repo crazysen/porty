@@ -33,7 +33,7 @@ export default function ContactForm({ email }: Props) {
         <span className="text-sm text-slate-300">Message</span>
         <textarea name="message" required rows={5} placeholder="Tell me about your project or opportunity..." className="field resize-y" />
       </label>
-      <button type="submit" className="btn btn-primary mt-1 justify-center py-3">
+      <button type="submit" data-magnetic className="btn btn-primary mt-1 justify-center py-3">
         <Send size={16} /> Send Message
       </button>
       <p className="text-center text-xs text-slate-500" aria-live="polite">

@@ -14,25 +14,33 @@ const photoAlt = `Portrait of ${profile.name}`;
 <section id="top" class="relative flex min-h-svh items-center overflow-hidden px-4 pt-20 pb-10 sm:px-6 sm:pt-24 sm:pb-16">
   <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgb(30_58_138/0.55),transparent_60%)]"></div>
   <div class="grid-bg absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"></div>
-  <StarField client:load />
-
-  <div class="pointer-events-none absolute top-28 left-[42%] hidden text-blue-300/40 lg:block">
-    <div class="animate-float">
-      <Polyhedron class="animate-spin-slow size-32" />
-    </div>
-  </div>
-  <div class="pointer-events-none absolute top-[62%] left-[50%] hidden text-cyan-300/30 lg:block">
-    <div class="animate-float-slow">
-      <Polyhedron class="animate-spin-slow size-20 [animation-direction:reverse]" />
-    </div>
-  </div>
-  <div class="pointer-events-none absolute -bottom-6 left-6 text-blue-300/25 sm:left-16">
-    <div class="animate-float-slow">
-      <Polyhedron class="animate-spin-slow size-24" />
-    </div>
+  <div data-parallax="0.35" class="absolute inset-x-0 -top-1/4 h-[150%]">
+    <StarField client:load />
   </div>
 
-  <div class="relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+  <div data-parallax="0.45" class="pointer-events-none absolute top-28 left-[42%] hidden text-blue-300/40 lg:block">
+    <div data-mouse="-28">
+      <div class="animate-float">
+        <Polyhedron class="animate-spin-slow size-32" />
+      </div>
+    </div>
+  </div>
+  <div data-parallax="0.25" class="pointer-events-none absolute top-[62%] left-[50%] hidden text-cyan-300/30 lg:block">
+    <div data-mouse="36">
+      <div class="animate-float-slow">
+        <Polyhedron class="animate-spin-slow size-20 [animation-direction:reverse]" />
+      </div>
+    </div>
+  </div>
+  <div data-parallax="0.55" class="pointer-events-none absolute -bottom-6 left-6 text-blue-300/25 sm:left-16">
+    <div data-mouse="-18">
+      <div class="animate-float-slow">
+        <Polyhedron class="animate-spin-slow size-24" />
+      </div>
+    </div>
+  </div>
+
+  <div data-scroll-fade class="relative mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
     <div data-reveal>
       <div class="mb-5 lg:hidden">
         <div class="size-28 rounded-full bg-linear-to-tr from-blue-500 via-sky-400 to-cyan-300 p-[3px] shadow-[0_0_40px_-6px_rgb(59_130_246/0.7)]">
@@ -70,7 +78,7 @@ const photoAlt = `Portrait of ${profile.name}`;
       </ul>
 
       <div class="mt-8 flex flex-wrap gap-3 lg:mt-9">
-        <a href="#contact" class="btn btn-primary group">
+        <a href="#contact" data-magnetic class="btn btn-primary group">
           Let's work together <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
         </a>
         <a href="#projects" class="btn btn-secondary">View my work</a>
@@ -89,7 +97,7 @@ const photoAlt = `Portrait of ${profile.name}`;
     <div data-reveal class="relative hidden flex-col lg:flex">
       <div class="absolute -inset-6 rounded-[2rem] bg-linear-to-tr from-blue-600/25 via-transparent to-cyan-400/20 blur-2xl"></div>
 
-      <div class="relative z-10 mr-6 -mb-12 self-end">
+      <div data-mouse="14" class="relative z-10 mr-6 -mb-12 self-end">
         <div class="animate-float-slow">
           <div class="size-44 rounded-full bg-linear-to-tr from-blue-500 via-sky-400 to-cyan-300 p-[3px] shadow-[0_0_60px_-8px_rgb(59_130_246/0.8)] xl:size-48">
             <Image

@@ -39,7 +39,17 @@ const {
     </script>
   </head>
   <body>
+    <div
+      id="scroll-progress"
+      aria-hidden="true"
+      class="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-linear-to-r from-blue-500 via-sky-400 to-cyan-300 shadow-[0_0_12px_rgb(56_189_248/0.7)]"
+      style="transform: scaleX(0)"
+    >
+    </div>
     <slot />
+    <script>
+      import "../scripts/effects";
+    </script>
     <script>
       const observer = new IntersectionObserver(
         (entries) => {

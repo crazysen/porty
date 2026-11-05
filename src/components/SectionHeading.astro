@@ -1,0 +1,36 @@
+---
+interface Props {
+  kicker: string;
+  title: string;
+  lead?: string;
+  align?: "center" | "left";
+  class?: string;
+}
+
+const { kicker, title, lead, align = "center", class: className = "" } = Astro.props;
+const words = title.split(" ");
+const centered = align === "center";
+---
+
+<div data-reveal class:list={[centered && "text-center", className]}>
+  <p class="section-kicker">// {kicker}</p>
+  <h2 class="section-title">
+    {
+      words.map((word, i) => (
+        <>
+          <span class="reveal-word" style={`--i:${i}`}>{word}</span>
+          {i < words.length - 1 && " "}
+        </>
+      ))
+    }
+  </h2>
+  <span
+    aria-hidden="true"
+    class:list={[
+      "heading-line mt-4 block h-[3px] w-20 rounded-full bg-linear-to-r from-blue-500 to-cyan-300 shadow-[0_0_14px_rgb(56_189_248/0.6)]",
+      centered ? "mx-auto origin-center" : "origin-left",
+    ]}
+  >
+  </span>
+  {lead && <p class:list={["section-lead", centered && "mx-auto"]}>{lead}</p>}
+</div>

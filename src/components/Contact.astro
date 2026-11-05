@@ -1,6 +1,7 @@
 ---
 import { Mail, Phone } from "lucide-react";
 import ContactForm from "./ContactForm";
+import SectionHeading from "./SectionHeading.astro";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { profile } from "../data/profile";
 
@@ -15,12 +16,13 @@ const channels = [
   <div class="pointer-events-none absolute bottom-0 left-1/2 h-80 w-[48rem] -translate-x-1/2 rounded-full bg-blue-600/15 blur-3xl"></div>
 
   <div class="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-2">
-    <div data-reveal>
-      <p class="section-kicker">// contact</p>
-      <h2 class="section-title">Let's Connect</h2>
-      <p class="section-lead">
-        Have a project in mind, an internship opening, or want to discuss a collaboration? I'd love to hear from you.
-      </p>
+    <div data-reveal="left">
+      <SectionHeading
+        kicker="contact"
+        title="Let's Connect"
+        align="left"
+        lead="Have a project in mind, an internship opening, or want to discuss a collaboration? I'd love to hear from you."
+      />
 
       <ul class="mt-8 grid gap-3">
         {
@@ -60,7 +62,7 @@ const channels = [
       </div>
     </div>
 
-    <div data-reveal>
+    <div data-reveal="right">
       <ContactForm client:visible email={profile.email} />
     </div>
   </div>
