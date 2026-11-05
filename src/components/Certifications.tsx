@@ -1,6 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { BadgeCheck, ChevronLeft, ChevronRight, ExternalLink, ZoomIn } from "lucide-react";
+import { BadgeCheck, CalendarDays, ChevronLeft, ChevronRight, ExternalLink, ZoomIn } from "lucide-react";
 import Modal from "./Modal";
 import { certifications, type Certification } from "../data/certifications";
 import { accentClasses } from "../data/accents";
@@ -14,45 +14,65 @@ function offsetFrom(active: number, i: number) {
   return d;
 }
 
+function useIsWide() {
+  const [wide, setWide] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setWide(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return wide;
+}
+
 export default function Certifications() {
   const [active, setActive] = useState(0);
+  const previous = useRef(0);
   const [selected, setSelected] = useState<Certification | null>(null);
   const close = useCallback(() => setSelected(null), []);
+  const wide = useIsWide();
 
-  const go = (step: number) => setActive((a) => (a + step + count) % count);
+  const show = (index: number) => {
+    previous.current = active;
+    setActive(((index % count) + count) % count);
+  };
 
   return (
     <>
-      <div className="relative overflow-hidden py-4">
+      <div className="relative overflow-hidden py-6">
         <div className="grid justify-items-center">
           {certifications.map((cert, i) => {
             const offset = offsetFrom(active, i);
+            const jumped = Math.abs(offsetFrom(previous.current, i) - offset) > 1;
             const isActive = offset === 0;
+            const visible = isActive || (wide && Math.abs(offset) === 1);
             const accent = accentClasses[cert.accent];
             return (
               <motion.article
                 key={cert.title}
-                className={`panel col-start-1 row-start-1 w-[80%] max-w-sm overflow-hidden select-none ${
+                className={`panel col-start-1 row-start-1 flex w-[min(21rem,86vw)] flex-col overflow-hidden select-none ${
                   isActive ? "cursor-grab border-blue-400/40 active:cursor-grabbing" : "cursor-pointer"
-                }`}
+                } ${visible ? "" : "pointer-events-none"}`}
+                initial={false}
                 animate={{
-                  x: `${offset * 92}%`,
-                  scale: isActive ? 1 : 0.84,
-                  opacity: Math.abs(offset) > 1 ? 0 : isActive ? 1 : 0.45,
+                  x: `${offset * 104}%`,
+                  scale: isActive ? 1 : 0.88,
+                  opacity: visible ? (isActive ? 1 : 0.4) : 0,
                   zIndex: isActive ? 2 : 1,
                 }}
                 style={{
                   boxShadow: isActive ? "0 30px 60px -20px rgb(59 130 246 / 0.45)" : undefined,
                 }}
-                transition={{ type: "spring", stiffness: 260, damping: 30 }}
+                transition={jumped ? { duration: 0 } : { type: "spring", stiffness: 260, damping: 30 }}
                 drag={isActive ? "x" : false}
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.25}
                 onDragEnd={(_, info) => {
-                  if (info.offset.x < -60) go(1);
-                  else if (info.offset.x > 60) go(-1);
+                  if (info.offset.x < -60) show(active + 1);
+                  else if (info.offset.x > 60) show(active - 1);
                 }}
-                onClick={() => (isActive ? undefined : setActive(i))}
+                onClick={() => (isActive ? undefined : show(i))}
                 aria-hidden={!isActive}
               >
                 <button
@@ -60,13 +80,14 @@ export default function Certifications() {
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => isActive && setSelected(cert)}
                   aria-label={`View ${cert.title} certificate`}
-                  className="group relative block aspect-[4/3] w-full overflow-hidden bg-white/[0.03]"
+                  className="group relative flex h-52 w-full shrink-0 items-center justify-center overflow-hidden bg-linear-to-b from-white/[0.06] to-white/[0.02] p-5"
                 >
                   <img
                     src={cert.image}
                     alt={`${cert.title} certificate`}
                     draggable={false}
-                    className="pointer-events-none size-full object-contain p-4"
+                    loading="lazy"
+                    className="pointer-events-none size-full object-contain drop-shadow-[0_10px_25px_rgb(0_0_0/0.45)] transition-transform duration-500 group-hover:scale-105"
                   />
                   {isActive && (
                     <span className="absolute inset-0 grid place-items-center bg-night/0 opacity-0 transition-all duration-300 group-hover:bg-night/50 group-hover:opacity-100">
@@ -77,26 +98,33 @@ export default function Certifications() {
                   )}
                 </button>
 
-                <div className="border-t border-line p-5 text-center">
-                  <span className={`mx-auto mb-3 grid size-9 place-items-center rounded-lg border ${accent.ring} ${accent.soft} ${accent.text}`}>
+                <div className="flex flex-1 flex-col items-center border-t border-line p-5 text-center">
+                  <span className={`mb-3 grid size-9 place-items-center rounded-lg border ${accent.ring} ${accent.soft} ${accent.text}`}>
                     <BadgeCheck size={18} />
                   </span>
-                  <h3 className="font-semibold">{cert.title}</h3>
-                  <p className="mt-1 text-sm text-ink-soft">{cert.issuer}</p>
-                  <p className="mt-2 font-mono text-xs text-slate-500">
-                    {cert.date}
-                    {cert.expires && <> · Expires {cert.expires}</>}
+                  <h3 className="flex min-h-12 items-center font-semibold leading-6">
+                    <span className="line-clamp-2">{cert.title}</span>
+                  </h3>
+                  <p className="mt-1 line-clamp-1 text-sm text-ink-soft">{cert.issuer}</p>
+                  <p className="mt-3 inline-flex items-center gap-1.5 font-mono text-xs text-slate-400">
+                    <CalendarDays size={13} /> {cert.date}
                   </p>
-                  {isActive && cert.verifyUrl && (
-                    <a
-                      href={cert.verifyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-cyan-300 hover:text-cyan-200"
-                    >
-                      Verify on Credly <ExternalLink size={14} />
-                    </a>
-                  )}
+                  <p className="mt-1 min-h-4 font-mono text-xs text-slate-500">
+                    {cert.expires ? `Valid until ${cert.expires}` : ""}
+                  </p>
+                  <div className="mt-auto flex h-9 items-end">
+                    {cert.verifyUrl && (
+                      <a
+                        href={cert.verifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        tabIndex={isActive ? 0 : -1}
+                        className="inline-flex items-center gap-1.5 text-sm font-medium text-cyan-300 hover:text-cyan-200"
+                      >
+                        Verify on Credly <ExternalLink size={14} />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </motion.article>
             );
@@ -104,8 +132,8 @@ export default function Certifications() {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center justify-center gap-4">
-        <button type="button" onClick={() => go(-1)} className="icon-btn" aria-label="Previous certificate">
+      <div className="mt-4 flex items-center justify-center gap-4">
+        <button type="button" onClick={() => show(active - 1)} className="icon-btn" aria-label="Previous certificate">
           <ChevronLeft size={18} />
         </button>
         <div className="flex items-center gap-2">
@@ -113,7 +141,7 @@ export default function Certifications() {
             <button
               key={cert.title}
               type="button"
-              onClick={() => setActive(i)}
+              onClick={() => show(i)}
               aria-label={`Show ${cert.title}`}
               aria-current={i === active ? "true" : undefined}
               className={`h-2 rounded-full transition-all duration-300 ${
@@ -122,7 +150,7 @@ export default function Certifications() {
             />
           ))}
         </div>
-        <button type="button" onClick={() => go(1)} className="icon-btn" aria-label="Next certificate">
+        <button type="button" onClick={() => show(active + 1)} className="icon-btn" aria-label="Next certificate">
           <ChevronRight size={18} />
         </button>
       </div>
@@ -133,7 +161,7 @@ export default function Certifications() {
             <img
               src={selected.image}
               alt={`${selected.title} certificate`}
-              className="max-h-[75vh] w-full rounded-xl bg-white/[0.03] object-contain"
+              className="mx-auto max-h-[75vh] w-auto max-w-full rounded-xl object-contain"
             />
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 px-2">
               <div>

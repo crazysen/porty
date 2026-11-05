@@ -150,17 +150,31 @@ export default function Projects() {
 
                   <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-ink-soft">{project.summary}</p>
 
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelected(project);
-                    }}
-                    aria-label={`View details for ${project.title}`}
-                    className="mt-auto inline-flex items-center gap-1.5 pt-6 text-sm font-medium text-slate-200 transition-colors group-hover:text-cyan-300"
-                  >
-                    View Project <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                  </button>
+                  <div className="mt-auto flex min-h-14 items-end justify-between gap-3 pt-6">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelected(project);
+                      }}
+                      aria-label={`View details for ${project.title}`}
+                      className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-200 transition-colors group-hover:text-cyan-300"
+                    >
+                      View Project <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+                    </button>
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        aria-label={`Open the live site for ${project.title}`}
+                        className="btn btn-primary px-3.5 py-1.5 text-xs"
+                      >
+                        <ExternalLink size={14} /> Live site
+                      </a>
+                    )}
+                  </div>
                 </article>
               </motion.li>
             );

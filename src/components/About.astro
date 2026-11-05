@@ -1,5 +1,5 @@
 ---
-import { BookOpen, GraduationCap, Languages, MapPin } from "lucide-react";
+import { BookOpen, GraduationCap, Languages } from "lucide-react";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import { certifications } from "../data/certifications";
@@ -41,7 +41,6 @@ const stats = [
         </div>
 
         <div class="mt-6 flex flex-wrap gap-2">
-          <span class="chip gap-1.5"><MapPin size={13} /> {profile.location}</span>
           <span class="chip gap-1.5"><Languages size={13} /> {profile.languages.join(" / ")}</span>
         </div>
       </article>

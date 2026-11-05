@@ -4,9 +4,9 @@ import { Download, Menu, X } from "lucide-react";
 import { profile } from "../data/profile";
 
 const links = [
+  { id: "about", label: "About" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
-  { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "certifications", label: "Certifications" },
   { id: "contact", label: "Contact" },

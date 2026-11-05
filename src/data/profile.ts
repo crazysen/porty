@@ -7,7 +7,6 @@ export const profile = {
     "IT student at National University - Dasmariñas who builds web and mobile apps, with a focus on software development, HCI, and UX. Projects span legal tech, restaurant ordering, and more.",
   focus: ["Software Development", "HCI", "UX"],
   heroStack: ["React", "Flutter", "Dart", "JavaScript", "Tailwind", "Supabase", "MySQL"],
-  location: "Kaysuyo, Alfonso, Cavite",
   email: "jensenmanalo23@gmail.com",
   phone: "+63 992 987 0821",
   phoneHref: "tel:+639929870821",

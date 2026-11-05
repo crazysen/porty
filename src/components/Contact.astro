@@ -1,5 +1,5 @@
 ---
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import ContactForm from "./ContactForm";
 import { GithubIcon, LinkedinIcon } from "./icons/BrandIcons";
 import { profile } from "../data/profile";
@@ -7,7 +7,7 @@ import { profile } from "../data/profile";
 const channels = [
   { label: "Email", value: profile.email, href: `mailto:${profile.email}`, icon: "mail" },
   { label: "Phone", value: profile.phone, href: profile.phoneHref, icon: "phone" },
-  { label: "Location", value: profile.location, icon: "pin" },
+  { label: "LinkedIn", value: `in/${profile.linkedinHandle}`, href: profile.linkedin, icon: "linkedin" },
 ];
 ---
 
@@ -25,28 +25,25 @@ const channels = [
       <ul class="mt-8 grid gap-3">
         {
           channels.map((c) => {
-            const content = (
-              <>
-                <span class="grid size-11 shrink-0 place-items-center rounded-xl border border-blue-400/30 bg-blue-500/10 text-blue-300">
-                  {c.icon === "mail" && <Mail size={18} />}
-                  {c.icon === "phone" && <Phone size={18} />}
-                  {c.icon === "pin" && <MapPin size={18} />}
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-mono text-xs text-slate-500">{c.label}</span>
-                  <span class="block truncate text-slate-200">{c.value}</span>
-                </span>
-              </>
-            );
+            const external = c.href.startsWith("http");
             return (
               <li>
-                {c.href ? (
-                  <a href={c.href} class="panel panel-hover flex items-center gap-4 p-4">
-                    {content}
-                  </a>
-                ) : (
-                  <div class="panel flex items-center gap-4 p-4">{content}</div>
-                )}
+                <a
+                  href={c.href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  class="panel panel-hover flex items-center gap-4 p-4"
+                >
+                  <span class="grid size-11 shrink-0 place-items-center rounded-xl border border-blue-400/30 bg-blue-500/10 text-blue-300">
+                    {c.icon === "mail" && <Mail size={18} />}
+                    {c.icon === "phone" && <Phone size={18} />}
+                    {c.icon === "linkedin" && <LinkedinIcon size={18} />}
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block font-mono text-xs text-slate-500">{c.label}</span>
+                    <span class="block truncate text-slate-200">{c.value}</span>
+                  </span>
+                </a>
               </li>
             );
           })

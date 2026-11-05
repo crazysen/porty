@@ -16,7 +16,7 @@ export const certifications: Certification[] = [
     issuer: "Certiport, a Pearson VUE business",
     date: "September 30, 2026",
     expires: "September 30, 2031",
-    image: "/certs/it-specialist-databases.jpg",
+    image: "/certs/it-specialist-databases.png",
     verifyUrl:
       "https://www.credly.com/badges/bfba7d90-77d8-4002-ad77-43832e508d6b/public_url",
     accent: "sky",

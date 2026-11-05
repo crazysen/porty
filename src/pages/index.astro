@@ -16,7 +16,11 @@ import Footer from "../components/Footer.astro";
   <main>
     <Hero />
 
-    <section id="skills" class="border-y border-line bg-navy/60 px-4 py-20 sm:px-6 sm:py-28">
+    <div class="border-y border-line bg-navy/60">
+      <About />
+    </div>
+
+    <section id="skills" class="px-4 py-20 sm:px-6 sm:py-28">
       <div class="mx-auto max-w-6xl">
         <div data-reveal class="mb-10 text-center">
           <p class="section-kicker">// tech stack</p>
@@ -29,7 +33,7 @@ import Footer from "../components/Footer.astro";
       </div>
     </section>
 
-    <section id="projects" class="px-4 py-20 sm:px-6 sm:py-28">
+    <section id="projects" class="border-y border-line bg-navy/60 px-4 py-20 sm:px-6 sm:py-28">
       <div class="mx-auto max-w-6xl">
         <div data-reveal class="mb-10 text-center">
           <p class="section-kicker">// projects</p>
@@ -39,10 +43,6 @@ import Footer from "../components/Footer.astro";
         <Projects client:load />
       </div>
     </section>
-
-    <div class="border-y border-line bg-navy/60">
-      <About />
-    </div>
 
     <Experience />
 
