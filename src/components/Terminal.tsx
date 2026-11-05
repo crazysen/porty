@@ -7,12 +7,6 @@ import { skillCategories } from "../data/skills";
 
 type Line = { kind: "cmd"; text: string } | { kind: "out"; content: ReactNode };
 
-const slug = (text: string) =>
-  text
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-
 const skillDirs: [string, string][] = [
   ["frontend/", "react  tailwind  html-css"],
   ["mobile/", "flutter  dart  react-native"],
@@ -69,26 +63,6 @@ const skillTree = (
   </span>
 );
 
-const projectList = (
-  <span className="flex flex-wrap gap-x-4">
-    {projects.map((p) => (
-      <SectionLink key={p.slug} id="projects">
-        {p.slug}
-      </SectionLink>
-    ))}
-  </span>
-);
-
-const certList = (
-  <span className="flex flex-wrap gap-x-4">
-    {certifications.map((c) => (
-      <SectionLink key={c.title} id="certifications">
-        {slug(c.title)}
-      </SectionLink>
-    ))}
-  </span>
-);
-
 const intro: Line[] = [
   { kind: "cmd", text: "whoami" },
   { kind: "out", content: <span className="text-slate-300">jensen-manalo</span> },
@@ -96,10 +70,6 @@ const intro: Line[] = [
   { kind: "out", content: status },
   { kind: "cmd", text: "ls -la skills/" },
   { kind: "out", content: skillTree },
-  { kind: "cmd", text: "ls projects/" },
-  { kind: "out", content: projectList },
-  { kind: "cmd", text: "ls certifications/" },
-  { kind: "out", content: certList },
 ];
 
 function run(raw: string): { output?: ReactNode; clear?: boolean } {
