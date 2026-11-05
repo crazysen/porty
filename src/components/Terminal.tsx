@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { useReducedMotion } from "motion/react";
+import { RotateCcw } from "lucide-react";
 import { profile } from "../data/profile";
 import { projects } from "../data/projects";
 import { certifications } from "../data/certifications";
@@ -18,6 +19,7 @@ const commands: [string, string][] = [
   ["contact", "how to reach me"],
   ["resume", "download my resume"],
   ["clear", "clear the screen"],
+  ["restart", "replay the intro"],
 ];
 
 function goTo(id: string) {
@@ -60,7 +62,7 @@ const intro: Line[] = [
   { kind: "out", content: introOutput("saddle-ranch-mobile  saddle-ranch-web  legallink") },
 ];
 
-function run(raw: string): { output?: ReactNode; clear?: boolean } {
+function run(raw: string): { output?: ReactNode; clear?: boolean; restart?: boolean } {
   const cmd = raw.trim().toLowerCase();
 
   switch (cmd) {
@@ -190,6 +192,9 @@ function run(raw: string): { output?: ReactNode; clear?: boolean } {
       };
     case "clear":
       return { clear: true };
+    case "restart":
+    case "reset":
+      return { restart: true };
     default:
       return {
         output: (
@@ -253,6 +258,15 @@ export default function Terminal() {
     inputRef.current?.focus({ preventScroll: true });
   };
 
+  const restart = () => {
+    setEntries([]);
+    setInput("");
+    setHistoryIndex(-1);
+    setShowIntro(true);
+    setCharIndex(0);
+    setLineIndex(0);
+  };
+
   const submit = () => {
     const raw = input;
     const result = run(raw);
@@ -260,6 +274,10 @@ export default function Terminal() {
     setHistoryIndex(-1);
     setInput("");
 
+    if (result.restart) {
+      restart();
+      return;
+    }
     if (result.clear) {
       setShowIntro(false);
       setEntries([]);
@@ -324,6 +342,15 @@ export default function Terminal() {
           <span className="size-3 rounded-full bg-amber-400/90" />
           <span className="size-3 rounded-full bg-emerald-400/90" />
           <span className="ml-3 font-mono text-xs text-slate-400">jensen@portfolio: ~</span>
+          <button
+            type="button"
+            onClick={restart}
+            aria-label="Replay terminal intro"
+            title="Replay intro"
+            className="ml-1 grid size-7 place-items-center rounded-md text-slate-500 transition-colors hover:bg-white/5 hover:text-cyan-300"
+          >
+            <RotateCcw size={14} />
+          </button>
         </div>
         <div
           ref={bodyRef}
