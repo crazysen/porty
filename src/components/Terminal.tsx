@@ -7,12 +7,7 @@ import { skillCategories } from "../data/skills";
 
 type Line = { kind: "cmd"; text: string } | { kind: "out"; content: ReactNode };
 
-const skillDirs: [string, string][] = [
-  ["frontend/", "react  tailwind  html-css"],
-  ["mobile/", "flutter  dart  react-native"],
-  ["backend/", "mysql  supabase  firebase"],
-  ["tools/", "git  github  vscode"],
-];
+const introOutput = (text: string) => <span className="whitespace-pre-wrap">{text}</span>;
 
 const commands: [string, string][] = [
   ["help", "show this list"],
@@ -51,25 +46,18 @@ const status = (
   </span>
 );
 
-const skillTree = (
-  <span className="block">
-    {skillDirs.map(([dir, items]) => (
-      <span key={dir} className="block whitespace-pre">
-        <span className="text-slate-600">drwxr-xr-x </span>
-        <span className="text-blue-400">{dir.padEnd(11)}</span>
-        <span className="text-emerald-300">{items}</span>
-      </span>
-    ))}
-  </span>
-);
-
 const intro: Line[] = [
   { kind: "cmd", text: "whoami" },
-  { kind: "out", content: <span className="text-slate-300">jensen-manalo</span> },
-  { kind: "cmd", text: "cat status.txt" },
-  { kind: "out", content: status },
+  { kind: "out", content: introOutput("jensen-manalo") },
+  { kind: "cmd", text: "cat role.txt" },
+  { kind: "out", content: introOutput("Web & Mobile Developer · BSIT @ NU Dasmariñas") },
   { kind: "cmd", text: "ls -la skills/" },
-  { kind: "out", content: skillTree },
+  { kind: "out", content: introOutput("drwxr-xr-x  frontend/   react  tailwind  html-css") },
+  { kind: "out", content: introOutput("drwxr-xr-x  mobile/     flutter  dart  react-native") },
+  { kind: "out", content: introOutput("drwxr-xr-x  backend/    mysql  supabase  firebase") },
+  { kind: "out", content: introOutput("drwxr-xr-x  tools/      git  github  figma") },
+  { kind: "cmd", text: "ls projects/" },
+  { kind: "out", content: introOutput("saddle-ranch-mobile  saddle-ranch-web  legallink") },
 ];
 
 function run(raw: string): { output?: ReactNode; clear?: boolean } {
@@ -101,6 +89,9 @@ function run(raw: string): { output?: ReactNode; clear?: boolean } {
           </span>
         ),
       };
+    case "role":
+    case "cat role.txt":
+      return { output: <span className="text-slate-300">{profile.role} · BSIT @ NU Dasmariñas</span> };
     case "status":
     case "cat status.txt":
       return { output: status };
@@ -320,7 +311,7 @@ export default function Terminal() {
         <Prompt /> {line.text}
       </p>
     ) : (
-      <div key={key} className="mb-1 text-slate-400">
+      <div key={key} className="text-slate-400">
         {line.content}
       </div>
     );
@@ -339,7 +330,7 @@ export default function Terminal() {
           onClick={focusInput}
           role="log"
           aria-label="Interactive terminal. Type help to see commands."
-          className="h-[23.5rem] cursor-text overflow-y-auto p-5 font-mono text-[13px] leading-relaxed [scrollbar-color:rgb(51_65_85)_transparent] [scrollbar-width:thin]"
+          className="h-[23.5rem] cursor-text overflow-y-auto p-5 font-mono text-[13px] leading-relaxed sm:text-sm [scrollbar-color:rgb(51_65_85)_transparent] [scrollbar-width:thin]"
         >
           {visibleIntro.map((line, i) => renderLine(line, `intro-${i}`))}
           {typing && showIntro && (
