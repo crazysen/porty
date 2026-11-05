@@ -72,19 +72,18 @@ export default function Skills() {
           className="flex flex-wrap justify-center gap-4"
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={{ once: true, amount: 0.1 }}
           exit="hidden"
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.03 } } }}
         >
           {active.skills.map((skill) => (
             <motion.li
               key={skill.name}
               className="w-[calc(50%-0.5rem)] sm:w-44"
               variants={{
-                hidden: { opacity: 0, y: 24, scale: 0.92 },
-                show: { opacity: 1, y: 0, scale: 1 },
+                hidden: { opacity: 0, y: 16, scale: 0.9, transition: { duration: 0.12 } },
+                show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 520, damping: 30 } },
               }}
-              transition={{ type: "spring", stiffness: 260, damping: 22 }}
             >
               <TiltCard maxTilt={10}>
                 <SkillTile skill={skill} />
