@@ -22,6 +22,15 @@ export const certifications: Certification[] = [
     accent: "sky",
   },
   {
+    title: "HTML Essentials",
+    issuer: "Cisco Networking Academy & JS Institute",
+    date: "November 5, 2026",
+    image: "/certs/html-essentials.png",
+    verifyUrl:
+      "https://www.credly.com/badges/c666c890-dabc-4006-8d26-104b2ad1a192/public_url",
+    accent: "lavender",
+  },
+  {
     title: "Claude Code in Action",
     issuer: "Anthropic Education",
     date: "April 19, 2026",
@@ -31,7 +40,7 @@ export const certifications: Certification[] = [
   {
     title: "AI Fluency: Framework & Foundations",
     issuer: "Anthropic",
-    date: "april 19, 2026",
+    date: "April 19, 2026",
     image: "/certs/ai-fluency.jpg",
     accent: "butter",
   },

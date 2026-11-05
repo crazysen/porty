@@ -115,7 +115,7 @@ export default function Certifications() {
               type="button"
               onClick={() => setActive(i)}
               aria-label={`Show ${cert.title}`}
-              aria-current={i === active}
+              aria-current={i === active ? "true" : undefined}
               className={`h-2 rounded-full transition-all duration-300 ${
                 i === active ? "w-7 bg-linear-to-r from-blue-500 to-cyan-400" : "w-2 bg-slate-600 hover:bg-slate-500"
               }`}
